@@ -29,7 +29,7 @@ import java.util.List;
  * @version: 0.0.1  *
  * @date: 2023/4/13 21:20
  */
-
+@Deprecated
 @RestController
 @RequestMapping("/v2/sysTenant/")
 public class SysTenantV2Controller /*extends BaseCrudRestController<SysTenant>*/ {

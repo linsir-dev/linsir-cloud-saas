@@ -8,8 +8,14 @@ import com.linsir.cloud.saas.api.dto.system.SysTenantDto;
 import com.linsir.core.vo.R;
 import com.linsir.core.vo.Pagination;
 import com.linsir.core.vo.Result;
-import com.linsir.core.vo.jsonResults.*;
-import com.linsir.logRecord.annotation.OperationLog;*/
+import com.linsir.core.vo.jsonResults.*;*/
+
+import com.linsir.base.core.controller.BaseCrudRestController;
+import com.linsir.base.core.vo.jsonResults.JsonResult;
+import com.linsir.base.core.vo.results.R;
+import com.linsir.logRecord.annotation.OperationLog;
+import com.linsir.saas.modules.system.dto.AddExtBusinessDTO;
+import com.linsir.saas.modules.system.dto.AddExtWebDTO;
 import com.linsir.saas.modules.system.entity.SysTenant;
 import com.linsir.saas.modules.system.entity.SysTenantExtWeb;
 import com.linsir.saas.modules.system.service.SysTenantExtWebService;
@@ -29,13 +35,104 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/v1/sysTenant/")
-public class SysTenantController /*extends BaseCrudRestController<SysTenant>*/ {
+public class SysTenantController extends BaseCrudRestController<SysTenant> {
 
     @Autowired
     private SysTenantService sysTenantService;
 
-    @Autowired
-    private SysTenantExtWebService sysTenantExtWebService;
+    /**
+     * 验证添加前的 逻辑判断
+     * @param entityOrDto
+     * @return
+     * @throws Exception
+     */
+
+    @Override
+    protected String beforeCreate(SysTenant entityOrDto) throws Exception {
+        return super.beforeCreate(entityOrDto);
+    }
+
+
+    /**
+     * @description 注册用户，默认当前注册14天
+     * @author Linsir
+     * @param  sysTenant [sysTenant]
+     * @return com.linsir.base.core.vo.results.R
+     * @time 2024/7/5 11:26
+     */
+    @OperationLog(bizId = "#sysTenant.tenantCode",bizType = "'register'",msg = "'租户'+ #sysTenant.name + '注册'")
+    @PostMapping("register")
+    public R register(SysTenant sysTenant) throws Exception {
+        return exec("注册住户",()->{
+            return new JsonResult<SysTenant>(sysTenantService.register(sysTenant));
+        });
+    }
+
+
+    /***
+     * @Description: 添加租户
+     * @Param: [sysTenant]
+     * @return: com.linsir.core.vo.jsonResults.ResResult
+     * @Author: linsir
+     * @Date: 2022/9/23 0:55
+     */
+    @OperationLog(bizId = "#sysTenant.tenantCode",bizType = "'add'",msg = "'租户'+ #sysTenant.name + '添加'")
+    @PostMapping("add")
+    public R add(SysTenant sysTenant) throws Exception {
+        return exec("添加租户",()->{
+            return new JsonResult<SysTenant>(sysTenantService.addSysTenant(sysTenant));
+        });
+    }
+
+
+    /**
+     * @description  添加网络信息
+     * @author Linsir
+     * @param
+     * @return com.linsir.base.core.vo.results.R
+     * @time 2024/7/5 12:39
+     */
+    @OperationLog(bizId = "#addExtWebDTO.sysTenantId",bizType = "'add'",msg = "'租户网站'+ #addExtWebDTO.sysTenantExtWeb.title + '添加'")
+    @PostMapping("addExtWeb")
+    public R addExtWeb(@RequestBody AddExtWebDTO addExtWebDTO) throws Exception {
+        return exec("添加网络信息",()->{
+           return new JsonResult(sysTenantService.addExtWeb(addExtWebDTO.getSysTenantId(),addExtWebDTO.getSysTenantExtWeb()));
+        });
+    }
+
+    /**
+     * @description 添加商务信息
+     * @author Linsir
+     * @param  addExtBusinessDTO
+     * @return com.linsir.base.core.vo.results.R
+     * @time 2024/7/5 15:18
+     */
+    @OperationLog(bizId = "#addExtBusinessDTO.sysTenantId",bizType = "'add'",msg = "'租户商务'+ #addExtBusinessDTO.SysTenantExtBusiness.firmName + '添加'")
+    @PostMapping("addExtBusiness")
+    public R addExtBusiness(@RequestBody AddExtBusinessDTO addExtBusinessDTO) throws Exception {
+        return exec("添加商务信息",()->{
+           return new JsonResult(sysTenantService.addExtBusiness(addExtBusinessDTO.getSysTenantId(),addExtBusinessDTO.getSysTenantExtBusiness())) ;
+        });
+    }
+
+    /**
+     * @Author linsir
+     * @Description 删除租户
+     * @Date 14:04 2022/9/23
+     * @Param [tenantId]
+     * @return com.linsir.core.vo.jsonResults.ResResult
+     **/
+    @OperationLog(bizId = "#tenantId",bizType = "'del'",msg = "'删除租户'+#tenantId")
+    @DeleteMapping("del")
+    public R del(Long tenantId) throws Exception {
+        R result = null;
+        result = exec("删除租户",()->{
+            sysTenantService.deleteEntity(tenantId);
+            return JsonResult.OK();
+        });
+        return result;
+    }
+
 
 
    /* *//**
@@ -61,43 +158,11 @@ public class SysTenantController /*extends BaseCrudRestController<SysTenant>*/ {
     }
 
 
-    *//***
-    * @Description: 添加租户
-    * @Param: [sysTenant]
-    * @return: com.linsir.core.vo.jsonResults.ResResult
-    * @Author: linsir
-    * @Date: 2022/9/23 0:55
-    *//*
-    @OperationLog(bizId = "#tenant.tenantCode",bizType = "'add'",msg = "'租户'+ #tenant + '添加'")
-    @PostMapping("add")
-    public ResResult add(SysTenant tenant) throws Exception {
-        R result = null;
-        result = exec("添加租户",()->{
-            sysTenantService.createEntity(tenant);
-            System.out.println(tenant.getId());
-            return Result.SUCCESS();
-        });
-        return new ResResult<>(result);
-    }
+    *
 
-    *//**
-     * @Author linsir
-     * @Description 删除租户
-     * @Date 14:04 2022/9/23
-     * @Param [tenantId]
-     * @return com.linsir.core.vo.jsonResults.ResResult
-     **//*
-    @OperationLog(bizId = "#tenantId",bizType = "'del'",msg = "'删除租户'+#tenantId")
-    @DeleteMapping("del")
-    public ResResult del(Long tenantId) throws Exception {
-        R result = null;
-        result = exec("删除租户",()->{
-            sysTenantService.deleteEntity(tenantId);
-            return Result.SUCCESS();
-        });
-        return  new ResResult<>(result);
-    }
 
+    */
+    /*
     *//**
      * @Author linsir
      * @Description 更新租户信息
@@ -157,16 +222,18 @@ public class SysTenantController /*extends BaseCrudRestController<SysTenant>*/ {
        return  new ResResult(result);
     }
 
-    *//**
+    */
+
+    /**
      * @Author linsir
      * @Description  自动生成 租户编码
      * @Date 23:27 2022/9/13
      * @Param []
      * @return java.lang.String
-     **//*
+     **/
     @GetMapping("generateCode")
     public String generateCode()
     {
        return sysTenantService.generateCode();
-    }*/
+    }
 }

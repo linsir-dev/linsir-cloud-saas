@@ -23,5 +23,9 @@
             <artifactId>linsir-cloud-saas-api</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.linsir</groupId>
+            <artifactId>linsir-starter-log</artifactId>
+        </dependency>
     </dependencies>
 </project>
