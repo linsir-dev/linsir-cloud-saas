@@ -2,9 +2,11 @@ package com.linsir.saas.modules.system.service.impl;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.linsir.base.core.service.impl.BaseServiceImpl;
+import com.linsir.base.core.util.BeanUtils;
 import com.linsir.base.core.util.D;
-import com.linsir.base.core.vo.results.R;
+import com.linsir.saas.modules.system.dto.RegisterSystenantDTO;
 import com.linsir.saas.modules.system.entity.SysTenant;
 import com.linsir.saas.modules.system.entity.SysTenantExt;
 import com.linsir.saas.modules.system.entity.SysTenantExtBusiness;
@@ -57,32 +59,21 @@ public class SysTenantServiceImpl extends BaseServiceImpl<SysTenantMapper, SysTe
     /**
      * @description 注册租户
      * @author Linsir
-     * @param  sysTenant
+     * @param  registerSystenantDTO
      * @return boolean
      * @time 2024/7/5 12:20
      */
     @Override
-    public boolean register(SysTenant sysTenant) {
+    public boolean register(RegisterSystenantDTO registerSystenantDTO) {
         Date now = new Date();
         String addDay = D.convert2DateTimeString(D.addDays(now,14));
+        SysTenant sysTenant =BeanUtils.convert(registerSystenantDTO,SysTenant.class);
         sysTenant.setTimeExpiration(addDay);
-        return addSysTenant(sysTenant);
-    }
-
-
-    /**
-     * @description 添加租户，在添加之前，我们自动生成租户编码
-     * @author Linsir
-     * @param  sysTenant
-     * @return boolean
-     * @time 2024/7/5 9:08
-     */
-    @Override
-    public boolean addSysTenant(SysTenant sysTenant) {
-        sysTenant.setTenantCode(generateCode());
-        sysTenant.setEnable(true);
         return createEntity(sysTenant);
     }
+
+
+
 
     /**
      * @description 增加租户网站信息
@@ -131,8 +122,20 @@ public class SysTenantServiceImpl extends BaseServiceImpl<SysTenantMapper, SysTe
 
     @Transactional
     @Override
-    public R delSysTenant(Long sysTenantId) {
-        return null;
+    public boolean delTenantAndRelated(Long sysTenantId) {
+        QueryWrapper<SysTenantExt> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("tenant_id", sysTenantId);
+        sysTenantExtService.getEntityList(queryWrapper).forEach(ext->{
+            switch (ext.getType()){
+                    case "web":
+                        sysTenantExtWebService.deleteEntity(ext.getExtId());
+                        break;
+                    case "business":
+                        sysTenantExtBusinessService.deleteEntity(ext.getExtId());
+                        break;
+            }
+        });
+        return deleteEntityAndRelatedEntities(sysTenantId,SysTenantExt.class,SysTenantExt::setTenantId);
     }
 }
 

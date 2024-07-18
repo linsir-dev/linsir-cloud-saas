@@ -1,7 +1,7 @@
 package com.linsir.saas.modules.system.service;
 
 import com.linsir.base.core.service.BaseService;
-import com.linsir.base.core.vo.results.R;
+import com.linsir.saas.modules.system.dto.RegisterSystenantDTO;
 import com.linsir.saas.modules.system.entity.SysTenant;
 import com.linsir.saas.modules.system.entity.SysTenantExtBusiness;
 import com.linsir.saas.modules.system.entity.SysTenantExtWeb;
@@ -21,14 +21,12 @@ public interface SysTenantService extends BaseService<SysTenant> {
      */
     String generateCode();
 
-    boolean register(SysTenant sysTenant);
-
-    boolean addSysTenant(SysTenant sysTenant);
+    boolean register(RegisterSystenantDTO registerSystenantDTO);
 
     boolean addExtWeb(Long sysTenantId, SysTenantExtWeb sysTenantExtWeb);
 
     boolean addExtBusiness(Long sysTenantId, SysTenantExtBusiness sysTenantExtBusiness);
 
-    R delSysTenant(Long sysTenantId);
+    boolean delTenantAndRelated(Long sysTenantId);
 
 }

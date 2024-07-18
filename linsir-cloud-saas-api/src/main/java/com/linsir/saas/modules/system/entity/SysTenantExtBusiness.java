@@ -2,6 +2,7 @@ package com.linsir.saas.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.linsir.base.core.entity.AbstractEntity;
+import com.linsir.base.core.entity.BaseModel;
 import lombok.Data;
 
 /**
@@ -16,7 +17,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_tenant_ext_business")
-public class SysTenantExtBusiness extends AbstractEntity<Long> {
+public class SysTenantExtBusiness extends BaseModel {
 
     /*企业名称，更多是在合同上的甲方*/
     private String firmName;

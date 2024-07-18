@@ -1,24 +1,11 @@
 package com.linsir.saas.modules.system.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.linsir.base.core.controller.BaseCrudRestController;
 import com.linsir.base.core.entity.Dictionary;
 import com.linsir.base.core.service.impl.DictionaryServiceExtImpl;
-import com.linsir.base.core.util.BeanUtils;
-import com.linsir.base.core.vo.FilterDataVO;
-import com.linsir.base.core.vo.R;
-import com.linsir.base.core.vo.Pagination;
-import com.linsir.base.core.vo.Result;
-import com.linsir.base.core.vo.jsonResults.*;
-import com.linsir.saas.dto.auth.DictionaryDto;
-import com.linsir.saas.modules.system.vo.TypeDictionaryVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * description:

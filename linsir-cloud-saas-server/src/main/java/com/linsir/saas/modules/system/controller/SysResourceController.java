@@ -1,21 +1,13 @@
 package com.linsir.saas.modules.system.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 /*import com.linsir.cloud.saas.api.dto.system.SysResourceDto;
 import com.linsir.core.controller.BaseCrudRestController;
 import com.linsir.core.vo.R;
 import com.linsir.core.vo.Pagination;
 import com.linsir.core.vo.Result;
 import com.linsir.core.vo.jsonResults.*;*/
-import com.linsir.saas.modules.system.entity.SysResource;
-import com.linsir.saas.modules.system.service.impl.SysResourceServiceImpl;
-import com.linsir.saas.modules.system.vo.SysResourceVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * description:

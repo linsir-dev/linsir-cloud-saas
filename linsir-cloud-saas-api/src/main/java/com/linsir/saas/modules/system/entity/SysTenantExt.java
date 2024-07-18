@@ -2,6 +2,7 @@ package com.linsir.saas.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.linsir.base.core.entity.AbstractEntity;
+import com.linsir.base.core.entity.BaseModel;
 import lombok.Data;
 
 /**
@@ -16,7 +17,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_tenant_ext")
-public class SysTenantExt extends AbstractEntity<Long> {
+public class SysTenantExt extends BaseModel {
 
     private Long tenantId;
 
