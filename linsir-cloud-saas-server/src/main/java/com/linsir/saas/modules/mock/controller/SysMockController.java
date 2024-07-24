@@ -63,4 +63,9 @@ public class SysMockController {
         return new JsonResult(userInfoVO);
     }
 
+    @GetMapping("getPermCode")
+    public R getPermCode()
+    {
+        return new JsonResult("user:add");
+    }
 }
