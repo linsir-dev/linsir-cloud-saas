@@ -33,6 +33,7 @@ public class UserVO extends User {
     @BindEntity(entity = UserExtMeta.class,condition = "this.id = user_ext.user_id AND user_ext.ext_id = id AND user_ext.type = 'meta'")
     private UserExtMeta userExtMeta;
 
+
     @BindFieldList(entity = UserExt.class,field = "type",condition = "this.id = user_ext.user_id")
     private List<String> types;
 }

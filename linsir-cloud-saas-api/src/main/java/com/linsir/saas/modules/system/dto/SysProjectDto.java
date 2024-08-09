@@ -1,4 +1,4 @@
-package com.linsir.saas.dto.system;
+package com.linsir.saas.modules.system.dto;
 
 import com.linsir.base.core.binding.query.BindQuery;
 import com.linsir.base.core.binding.query.Comparison;

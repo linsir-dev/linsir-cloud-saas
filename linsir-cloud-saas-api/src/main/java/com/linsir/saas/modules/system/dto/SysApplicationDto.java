@@ -1,4 +1,4 @@
-package com.linsir.saas.dto.system;
+package com.linsir.saas.modules.system.dto;
 
 /**
  * @author ：linsir

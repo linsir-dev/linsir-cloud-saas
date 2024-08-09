@@ -21,6 +21,10 @@ public class SysMeta extends AbstractEntity<Long> {
 
     private boolean affix;
 
+    private boolean fullPage;
+
+    private boolean hidden;
+
     private String type;
 
 }

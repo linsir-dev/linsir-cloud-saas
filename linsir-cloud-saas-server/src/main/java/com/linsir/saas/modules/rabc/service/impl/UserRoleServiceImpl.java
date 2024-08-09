@@ -1,9 +1,5 @@
 package com.linsir.saas.modules.rabc.service.impl;
 
-import com.linsir.saas.modules.rabc.entity.UserRole;
-import com.linsir.saas.modules.rabc.mapper.UserRoleMapper;
-import com.linsir.saas.modules.rabc.service.UserRoleService;
-import com.linsir.base.core.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

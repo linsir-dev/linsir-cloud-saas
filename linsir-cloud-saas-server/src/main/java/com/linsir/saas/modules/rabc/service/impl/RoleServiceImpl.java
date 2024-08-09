@@ -3,10 +3,10 @@ package com.linsir.saas.modules.rabc.service.impl;
 /*import com.linsir.common.mp.dto.ParameterDto;
 import com.linsir.common.mp.result.RespResult;
 import com.linsir.common.mp.service.BaseServiceImpl;*/
+import com.linsir.base.core.service.impl.BaseServiceImpl;
 import com.linsir.saas.modules.rabc.entity.Role;
 import com.linsir.saas.modules.rabc.mapper.RoleMapper;
 import com.linsir.saas.modules.rabc.service.RoleService;
-import com.linsir.base.core.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/1/18 12:40
  */
 @Service
-public class RoleServiceImpl  {
+public class RoleServiceImpl  extends BaseServiceImpl<RoleMapper, Role> implements RoleService {
 
     /*extends BaseServiceImpl<RoleMapper,Role,RoleDto, RoleVO> implements IService<Role>,RoleService*/
    /* @Resource

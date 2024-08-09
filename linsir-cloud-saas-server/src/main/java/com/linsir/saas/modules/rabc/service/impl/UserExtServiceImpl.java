@@ -1,9 +1,9 @@
 package com.linsir.saas.modules.rabc.service.impl;
 
+import com.linsir.base.core.service.impl.BaseServiceImpl;
 import com.linsir.saas.modules.rabc.entity.UserExt;
 import com.linsir.saas.modules.rabc.mapper.UserExtMapper;
 import com.linsir.saas.modules.rabc.service.UserExtService;
-import com.linsir.base.core.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,5 +18,5 @@ import org.springframework.stereotype.Service;
  * @date: 2023/4/11 22:56
  */
 @Service
-public class UserExtServiceImpl  {
+public class UserExtServiceImpl extends BaseServiceImpl<UserExtMapper, UserExt> implements UserExtService {
 }

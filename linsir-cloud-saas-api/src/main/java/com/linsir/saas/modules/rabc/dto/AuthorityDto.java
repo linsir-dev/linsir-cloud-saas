@@ -1,4 +1,4 @@
-package com.linsir.saas.dto.auth;
+package com.linsir.saas.modules.rabc.dto;
 
 /*import com.linsir.common.mp.dto.BaseDto;
 import com.linsir.common.mp.dto.CommonBaseDto;*/

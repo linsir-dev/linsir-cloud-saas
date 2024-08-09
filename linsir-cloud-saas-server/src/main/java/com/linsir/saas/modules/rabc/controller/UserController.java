@@ -1,15 +1,28 @@
 package com.linsir.saas.modules.rabc.controller;
 
 
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.linsir.base.core.vo.Pagination;
 import com.linsir.base.core.vo.jsonResults.JsonResult;
 import com.linsir.base.core.vo.results.R;
+import com.linsir.logRecord.annotation.OperationLog;
+import com.linsir.saas.modules.rabc.dto.UserDto;
+import com.linsir.saas.modules.rabc.dto.UserQueryDTO;
 import com.linsir.saas.modules.rabc.entity.User;
 import com.linsir.saas.modules.rabc.service.impl.UserServiceImpl;
 import com.linsir.base.core.controller.BaseCrudRestController;
+import com.linsir.saas.modules.rabc.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * description:
@@ -19,20 +32,63 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2022/09/01 18:35:10
  */
 @RestController
-@RequestMapping("/v1/user/")
+@RequestMapping("/user/")
 public class UserController extends BaseCrudRestController<User> {
 
 
     @Autowired
     private UserServiceImpl userService;
 
+    /**
+     * @description 获取用户
+     * @author Linsir
+     * @param
+     * @return com.linsir.base.core.vo.results.R
+     * @time 2024/8/10 0:58
+     */
+    @OperationLog(bizId = "#id",bizType = "'get'",msg = "'租户用户'")
+    @GetMapping("get/{id}")
+    public R get(@PathVariable("id") Long id) throws Exception {
+        return exec("根据id的获取",()->{
+           return getViewObject(id, UserVO.class);
+        });
+    }
 
-    @GetMapping("get")
+    public R list(UserQueryDTO userQueryDTO) throws Exception {
+         return exec("用户列表",()->{
+                    return  null;
+         });
+    }
+
+    @OperationLog(bizId = "'getPermCode'",bizType = "'getPermCode'",msg = "'获取权限编码'")
+    @GetMapping("getPermCode")
+    public R getPermCode()
+    {
+        List<Map<Integer, List<Integer>>> maps = new ArrayList<>();
+        Map<Integer, List<Integer>> map1 = new HashMap<>();
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1000);
+        list1.add(3000);
+        list1.add(5000);
+        map1.put(1, list1);
+        Map<Integer, List<Integer>> map2 = new HashMap<>();
+        List<Integer> list2 = new ArrayList<>();
+        list2.add(2000);
+        list2.add(4000);
+        list2.add(6000);
+        map2.put(2, list2);
+        maps.add(map1);
+        maps.add(map2);
+        return JsonResult.OK(maps);
+    }
+
+
+    /*@GetMapping("get")
     public JsonResult<String> getUerInfo() throws Exception {
         return (JsonResult<String>) exec("xxxx",()->{
             return JsonResult.OK();
         });
-    }
+    }*/
 
 
     /**

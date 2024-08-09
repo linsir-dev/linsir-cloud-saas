@@ -20,6 +20,8 @@ public class SysResource extends AbstractEntity<Long> {
 
     private String path;
 
+    private String redirect;
+
     private Long appId;
 
     private Long metaId;

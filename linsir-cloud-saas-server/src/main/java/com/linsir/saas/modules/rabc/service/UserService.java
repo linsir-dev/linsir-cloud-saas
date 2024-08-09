@@ -1,9 +1,12 @@
 package com.linsir.saas.modules.rabc.service;
 
 
+import com.linsir.saas.modules.rabc.dto.UserQueryDTO;
 import com.linsir.saas.modules.rabc.entity.User;
 import com.linsir.saas.modules.rabc.vo.UserVO;
 import com.linsir.base.core.service.BaseService;
+
+import java.util.List;
 
 /**
  * description:
@@ -15,4 +18,6 @@ import com.linsir.base.core.service.BaseService;
 
 public interface UserService extends BaseService<User> {
     UserVO getByAccount(String account);
+
+    List<UserVO> list(UserQueryDTO queryDTO);
 }

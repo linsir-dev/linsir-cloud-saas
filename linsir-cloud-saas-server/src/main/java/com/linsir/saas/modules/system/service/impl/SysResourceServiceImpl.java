@@ -47,18 +47,30 @@ public class SysResourceServiceImpl extends BaseServiceImpl<SysResourceMapper, S
     public MenuVO getByUser(Long userId) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.orderByAsc("sort");
-        List<SysResource> sysResourceList = list(queryWrapper);
-        List<SysResourceVO> sysResourceVOList = Binder.convertAndBindRelations(sysResourceList,SysResourceVO.class);
-        sysResourceVOList = BeanUtils.buildTree(sysResourceVOList);
-
+        List<SysResourceVO>  sysResourceVOTreeList = getSysResourceVOTreeList(queryWrapper);
         MenuVO menuVO = new MenuVO();
-        menuVO.setMenu(sysResourceVOList);
-
+        menuVO.setMenu(sysResourceVOTreeList);
         List<String> stringList = new ArrayList<>();
         stringList.add("list.add");
         stringList.add("list.delete");
         menuVO.setPermissions(stringList);
         return menuVO;
+    }
+
+
+    /**
+     * @description 树形菜单列表
+     * @author Linsir
+     * @param  queryWrapper
+     * @return java.util.List<com.linsir.saas.modules.system.vo.SysResourceVO>
+     * @time 2024/7/29 20:11
+     */
+    public List<SysResourceVO> getSysResourceVOTreeList(QueryWrapper queryWrapper) {
+        List<SysResource> sysResourceList = list(queryWrapper);
+        List<SysResourceVO> sysResourceVOList = Binder.convertAndBindRelations(sysResourceList,SysResourceVO.class);
+        //转化成树形菜单
+        sysResourceVOList = BeanUtils.buildTree(sysResourceVOList);
+        return sysResourceVOList;
     }
 
 }

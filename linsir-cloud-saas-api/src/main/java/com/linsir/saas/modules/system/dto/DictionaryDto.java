@@ -1,4 +1,4 @@
-package com.linsir.saas.dto.auth;
+package com.linsir.saas.modules.system.dto;
 
 /**
  * description:
