@@ -28,8 +28,9 @@ public class UserServiceImpl  extends BaseServiceImpl<UserMapper, User> implemen
     @Override
     public List<UserVO> list(UserQueryDTO queryDTO) {
 
-        getViewObject()
-        return List.of();
+        return null;
+        //getViewObject()
+        //return List.of();
     }
 
 
