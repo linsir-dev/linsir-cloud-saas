@@ -5,14 +5,12 @@ import com.linsir.base.core.controller.BaseController;
 import com.linsir.base.core.vo.jsonResults.JsonResult;
 import com.linsir.base.core.vo.results.R;
 import com.linsir.saas.modules.system.entity.SysResource;
+import com.linsir.saas.modules.system.service.MenuService;
 import com.linsir.saas.modules.system.service.SysResourceService;
 import com.linsir.saas.modules.system.service.impl.SysResourceServiceImpl;
 import com.linsir.saas.modules.system.vo.MenuVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * description: 菜单
@@ -27,6 +25,9 @@ public class MenuController extends BaseController {
 
     @Autowired
     private SysResourceService sysResourceService;
+
+    @Autowired
+    private MenuService menuService;
 
     /**
      * 获取菜单
@@ -52,6 +53,24 @@ public class MenuController extends BaseController {
            return JsonResult.OK(sysResourceService.getSysResourceVOTreeList(queryWrapper));
         });
     }
+
+
+    /**********************************************************************************************************/
+
+    /**
+     * @description 根据id 获取 菜单
+     * @author Linsir
+     * @param  appId
+     * @return com.linsir.base.core.vo.results.R
+     * @time 2024/8/24 9:56
+     */
+    @GetMapping("getMenusByAppId/{appId}")
+    public R getMenusByAppId(@PathVariable("appId") String appId) throws Exception {
+        return exec("按照AppId获取菜单",()->{
+           return menuService.getMenusByAppId(appId);
+        });
+    }
+
 
     /**
      * 超级管理员 菜单
