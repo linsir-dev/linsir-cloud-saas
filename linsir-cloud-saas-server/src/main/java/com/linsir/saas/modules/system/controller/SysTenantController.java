@@ -3,12 +3,14 @@ package com.linsir.saas.modules.system.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.linsir.base.core.controller.BaseCrudRestController;
+import com.linsir.base.core.vo.Pagination;
 import com.linsir.base.core.vo.jsonResults.JsonResult;
 import com.linsir.base.core.vo.results.R;
 import com.linsir.logRecord.annotation.OperationLog;
 import com.linsir.saas.modules.system.dto.AddExtBusinessDTO;
 import com.linsir.saas.modules.system.dto.AddExtWebDTO;
 import com.linsir.saas.modules.system.dto.RegisterSystenantDTO;
+import com.linsir.saas.modules.system.dto.TenantPageQuery;
 import com.linsir.saas.modules.system.entity.SysTenant;
 import com.linsir.saas.modules.system.service.SysTenantService;
 import com.linsir.saas.modules.system.vo.SysTenantVO;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @author admin
  * @version 1.0.0
  * @ClassName SysTenantController.java
- * @Description TODO
+ * @Description
  * @createTime 2022年07月18日 17:57:00
  */
 @RestController
@@ -120,6 +122,15 @@ public class SysTenantController extends BaseCrudRestController<SysTenant> {
         return getEntityList(queryWrapper);
     }
 
+
+    @PostMapping("listPage")
+    public R listPage(TenantPageQuery tenantPageQuery) throws Exception {
+        Pagination pagination = new Pagination((int) tenantPageQuery.getPageNum());
+        SysTenant sysTenant = new SysTenant();
+        return exec("获取带翻页的list",()->{
+            return getViewObjectList(sysTenant,pagination,SysTenantVO.class).bindPagination(pagination);
+        });
+    }
 
 /*************************************以上是默认增删改查*******************************************************************************/
 
